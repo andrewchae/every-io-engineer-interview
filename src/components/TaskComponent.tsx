@@ -2,19 +2,19 @@ import { useTasks } from '../contexts/TasksContext.tsx';
 import { CATEGORIES } from '../utils/consts.ts';
 import { Task } from '../types';
 
-export default function TaskComponent({ task, categoryIndex, taskIndex }: { task: Task, categoryIndex: number, taskIndex: number }) {
+export default function TaskComponent({ task, categoryIndex }: { task: Task, categoryIndex: number }) {
   const { moveTask } = useTasks();
   const handleMoveTaskForward = () => {
     if (categoryIndex + 1 >= CATEGORIES.length) {
       return;
     }
-    moveTask(taskIndex, categoryIndex, categoryIndex + 1);
+    moveTask(task.id, categoryIndex, categoryIndex + 1);
   };
   const handleMoveTaskBack = () => {
     if (categoryIndex - 1 < 0) {
       return;
     }
-    moveTask(taskIndex, categoryIndex, categoryIndex - 1);
+    moveTask(task.id, categoryIndex, categoryIndex - 1);
   };
   return (
     <div className="flex flex-row justify-between items-center mb-2">

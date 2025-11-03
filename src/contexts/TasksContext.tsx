@@ -5,7 +5,7 @@ import { Task } from '../types';
 interface TasksContextType {
   tasks: Task[][];
   addTask: (title: string) => void;
-  moveTask: (taskIndex: number, fromCategory: number, toCategory: number) => void;
+  moveTask: (taskId: string, fromCategory: number, toCategory: number) => void;
 }
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
@@ -24,13 +24,17 @@ export function TasksProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const moveTask = (taskIndex: number, fromCategory: number, toCategory: number) => {
+  const moveTask = (taskId: string, fromCategory: number, toCategory: number) => {
     if (toCategory < 0 || toCategory >= tasks.length) {
       return;
     }
     
     setTasks((prevTasks) => {
       const newTasks = prevTasks.map((category) => [...category]);
+      const taskIndex = newTasks[fromCategory].findIndex((task) => task.id === taskId);
+      if (taskIndex === -1) {
+        return prevTasks;
+      }
       const task = newTasks[fromCategory][taskIndex];
       newTasks[fromCategory].splice(taskIndex, 1);
       newTasks[toCategory].push(task);
