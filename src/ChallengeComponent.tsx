@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTasks } from './contexts/TasksContext.tsx';
   
 export function ChallengeComponent() {
-  const { tasks, addTask } = useTasks();
+  const { addTask } = useTasks();
   const [newTask, setNewTask] = useState<string>('');
   
   const handleAddTask = () => {
@@ -16,7 +16,7 @@ export function ChallengeComponent() {
     <>
       <div className="flex flex-row p-4">
         {CATEGORIES.map((category, index) => (
-          <CategoryComponent key={category} category={category} categoryIndex={index} tasks={tasks[index] || []} />
+          <CategoryComponent key={category} category={category} categoryIndex={index} />
         ))}
       </div>
       <div className='flex flex-row p-4 m-2 gap-2'>
