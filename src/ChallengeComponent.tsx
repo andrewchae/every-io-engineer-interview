@@ -1,17 +1,14 @@
 import CategoryComponent from './components/CategoryComponent.tsx';
-import { CATEGORIES, INITIAL_TASKS } from './utils/consts.ts';
+import { CATEGORIES } from './utils/consts.ts';
 import { useState } from 'react';
+import { useTasks } from './contexts/TasksContext.tsx';
   
 export function ChallengeComponent() {
-  const [tasks, setTasks] = useState<string[][]>(INITIAL_TASKS);
+  const { tasks, addTask } = useTasks();
   const [newTask, setNewTask] = useState<string>('');
+  
   const handleAddTask = () => {
-    if (newTask.trim() === '') {
-      return;
-    }
-    const newTasks = [...tasks];
-    newTasks[0].push(newTask);
-    setTasks(newTasks);
+    addTask(newTask);
     setNewTask('');
   };
 
@@ -19,7 +16,7 @@ export function ChallengeComponent() {
     <>
       <div className="flex flex-row p-4">
         {CATEGORIES.map((category, index) => (
-          <CategoryComponent key={category} category={category} tasks={tasks[index] || []} />
+          <CategoryComponent key={category} category={category} categoryIndex={index} tasks={tasks[index] || []} />
         ))}
       </div>
       <div className='flex flex-row p-4 m-2 gap-2'>
