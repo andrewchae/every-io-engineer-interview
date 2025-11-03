@@ -1,10 +1,12 @@
+import CategoryComponent from './components/CategoryComponent.tsx';
+import { CATEGORIES } from './utils/consts.ts';
+  
 export function ChallengeComponent() {
   return (
-    <>
-      {/* Delete this h2, and add your own code here. */}
-      <h2 className="text-center py-48 text-xl text-gray-700">
-        Your code goes here
-      </h2>
-    </>
+    <div className="flex flex-row p-4">
+      {CATEGORIES.map((category) => (
+        <CategoryComponent key={category} category={category} />
+      ))}
+    </div>
   );
 }
