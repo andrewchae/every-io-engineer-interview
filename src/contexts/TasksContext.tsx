@@ -4,6 +4,7 @@ import { INITIAL_TASKS } from '../utils/consts.ts';
 interface TasksContextType {
   tasks: string[][];
   addTask: (task: string) => void;
+  moveTask: (taskIndex: number, fromCategory: number, toCategory: number) => void;
 }
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
@@ -22,8 +23,18 @@ export function TasksProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const moveTask = (taskIndex: number, fromCategory: number, toCategory: number) => {
+    setTasks((prevTasks) => {
+      const newTasks = prevTasks.map((category) => [...category]);
+      const task = newTasks[fromCategory][taskIndex];
+      newTasks[fromCategory].splice(taskIndex, 1);
+      newTasks[toCategory].push(task);
+      return newTasks;
+    });
+  };
+
   return (
-    <TasksContext.Provider value={{ tasks, addTask }}>
+    <TasksContext.Provider value={{ tasks, addTask, moveTask }}>
       {children}
     </TasksContext.Provider>
   );
