@@ -24,6 +24,10 @@ export function TasksProvider({ children }: { children: ReactNode }) {
   };
 
   const moveTask = (taskIndex: number, fromCategory: number, toCategory: number) => {
+    if (toCategory < 0 || toCategory >= tasks.length) {
+      return;
+    }
+    
     setTasks((prevTasks) => {
       const newTasks = prevTasks.map((category) => [...category]);
       const task = newTasks[fromCategory][taskIndex];

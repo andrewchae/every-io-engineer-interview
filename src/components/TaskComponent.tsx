@@ -1,11 +1,18 @@
 import { useTasks } from '../contexts/TasksContext.tsx';
+import { CATEGORIES } from '../utils/consts.ts';
 
 export default function TaskComponent({ task, categoryIndex, taskIndex }: { task: string, categoryIndex: number, taskIndex: number }) {
   const { moveTask } = useTasks();
   const handleMoveTaskForward = () => {
+    if (categoryIndex + 1 >= CATEGORIES.length) {
+      return;
+    }
     moveTask(taskIndex, categoryIndex, categoryIndex + 1);
   };
   const handleMoveTaskBack = () => {
+    if (categoryIndex - 1 < 0) {
+      return;
+    }
     moveTask(taskIndex, categoryIndex, categoryIndex - 1);
   };
   return (
